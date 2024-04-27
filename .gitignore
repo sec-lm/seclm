@@ -1,0 +1,8 @@
+OVMF.fd
+initrd.img-*
+vmlinuz-*
+*.iso
+*.img
+*.qcow2
+certs.blob
+user-data.cfg
