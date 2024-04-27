@@ -6,6 +6,12 @@ Main use cases:
 - Using cloud resources safely: you want to protect your data and make sure the cloud provider cannot see your workloads. This tool can help you attest that the providers provisioning the confidential VM with your requested configurations.
 - Providing trustworthy services to users: you want to provide proof to your users that you are handling their data as you said.
 
+Table of contents:
+- [Getting Started](#getting-started)
+  - [Use Case 1: using cloud resources safely](#use-case-1-using-cloud-resources-safely)
+  - [Use Case 2: providing trustworthy services to users](#use-case-2-providing-trustworthy-services-to-users)
+- [How to verify the attestation report and the measurement result?](#how-to-verify-the-attestation-report-and-the-measurement-result)
+
 ## Getting Started
 Download the Ubuntu official image and our patched booting components
 ```
@@ -29,9 +35,16 @@ wget https://github.com/sec-lm/measured-direct-boot/releases/download/fbb77fd/in
 3. Send the user-data.iso to the host.
 
 ### Use Case 2: providing trustworthy services to users
-TODO
+#### Service provider
+In this scenario, the service provider plays both host and guest roles in [use case 1](#use-case-1-using-cloud-resources-safely). Once the confidential VM is launched, it should retrieve the attestation report and publish it together with the user-data.iso which specifies the program running inside the confidential VM.
 
-### How to verify the attestation report and the measurement result?
+Usually, the program will need a public-private key pair to securely communicate with end users, we also provide an [example config](user-data-examples/ssl_acme.cfg) to automatically issue an SSL certificate and include the pubkey sha256 to the report data field of the attestation report. To use this config, forward the 80 port on the host for certificate issuance `sudo socat TCP4-LISTEN:80,reuseaddr,fork TCP4:127.0.0.1:9980`, you can stop the forwarding after the VM provisioning stage.
+
+#### End users
+End users can identify the program running inside by combining the user-data.iso and the pubkey hash in the attestation report. The service provider should provide these together with the service.
+
+
+## How to verify the attestation report and the measurement result?
 Note: In the use case 2, it's the service provider's responsibility to publish the attestation report, VCEK certificate, and user-data.iso(step 2, 3, 7) to end users.
 
 1. Install [snpguest](https://github.com/virtee/snpguest.git).
@@ -49,7 +62,7 @@ sudo ./snpguest report report.bin request-file.txt --random
 
 3. Retrieve the host VCEK certificate.
 
-If the host configure the VCEK certificate, then run the following command inside the guest VM. Otherwise, ask the host to get the vcek.pem.
+If the host configured the VCEK certificate, then run the following command inside the guest VM. Otherwise, ask the host to get the vcek.pem.
 ```
 sudo ./snpguest certificates pem ./
 ```
@@ -65,12 +78,12 @@ openssl verify --CAfile ./vcek_cert_chain.pem vcek.pem
 sudo ./snpguest verify attestation ./ report.bin
 ```
 
-6. Next, read the measurement result from the attestation report.
+6. Next, read the measurement result from the attestation report. The report data field which may contain the pubkey hash in use case 2 is also revealed here.
 ```
 ./snpguest display report report.bin
 ```
 
-7. Calculate the shasum for the user data iso.
+7. Calculate the shasum for the user-data.iso.
 ```
 sha512sum user-data.iso
 ```
