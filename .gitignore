@@ -5,4 +5,6 @@ vmlinuz-*
 *.img
 *.qcow2
 certs.blob
+vcek.pem
 user-data.cfg
+report.bin
