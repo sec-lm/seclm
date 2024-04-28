@@ -14,7 +14,7 @@ while True:
         time.sleep(5)
         print("Waiting...")
         count += 1
-        if count > 12:
+        if count > 60:
             raise
 
 s.listen(1)
