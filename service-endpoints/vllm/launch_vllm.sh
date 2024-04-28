@@ -13,11 +13,11 @@ pip install flash-attn==2.5.8
 
 sudo setcap 'cap_net_bind_service=+ep' `which python3.11`
 
-git clone https://github.com/sec-lm/llm-endpoint.git
-pushd llm-endpoint
-git checkout 72a69752b7b82f46f15af4c701c0d0fe92c6aaa8
-
+git clone https://github.com/sec-lm/seclm.git vllm
 pushd vllm
+git checkout c5a0239402257910609fb28b59a75ec47017422b
+
+pushd service-endpoints/vllm
 
 export SECLM_TMP_PORT=80
 
