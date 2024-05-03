@@ -1,4 +1,4 @@
-# SecLM SNP Tools
+# SecLM
 
 This repo extends [AMD SEV-SNP](https://github.com/AMDESE/AMDSEV/tree/snp-latest) [measured direct boot](https://static.sched.com/hosted_files/kvmforum2021/ed/securing-linux-vm-boot-with-amd-sev-measurement.pdf) to verify the OS image and the cloud-init configuration. We also provide scripts to integrate [NVIDIA Confidential Computing](https://www.nvidia.com/en-us/data-center/solutions/confidential-computing/).
 
@@ -42,6 +42,7 @@ Usually, the program will need a public-private key pair to securely communicate
 
 #### End users
 End users can identify the program running inside by combining the user-data.iso and the pubkey hash in the attestation report. The service provider should provide these together with the service.
+We provide a [python library](https://pypi.org/project/seclm/) to help users to pin the pubkey in their applications.
 
 
 ## How to verify the attestation report and the measurement result?
