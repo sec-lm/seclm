@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Space, Select } from 'antd';
+import { Space, Select, Card, Collapse } from 'antd';
+import { InfoCircleOutlined } from '@ant-design/icons';
 import ChatBox from './ChatBox';
 import EndpointInfo from './EndpointInfo';
 
@@ -54,6 +55,49 @@ const App = () => {
       <EndpointInfo currentEndpointInfo={currentEndpointInfo}></EndpointInfo>
       <br />
       <ChatBox currentEndpoint={currentEndpoint} currentModel={currentModel}></ChatBox>
+      <br />
+      <Card
+        title={
+          <Space>
+            <InfoCircleOutlined />
+            Try it in Python
+          </Space>
+        }
+        bordered={true}
+      >
+        <Collapse
+          size="small"
+          bordered={false}
+          items={[
+            {
+              key: '1',
+              label: 'Expand',
+              children: <pre>
+                {`\
+from seclm.ssl import create_ssl_context
+ssl_context = create_ssl_context("`+ currentEndpointInfo.url + `", "` + currentEndpointInfo.pubkey_sha256 + `")
+
+from openai import OpenAI, DefaultHttpxClient
+client = OpenAI(
+    api_key="EMPTY",
+    base_url="`+ currentEndpointInfo.url + `",
+    http_client=DefaultHttpxClient(verify=ssl_context)
+)
+chat_completion = client.chat.completions.create(
+    messages=[
+        {
+            "role": "user",
+            "content": "Say this is a test",
+        }
+    ],
+    model="`+ currentModel + `",
+)\
+                        `}
+              </pre>,
+            },
+          ]}
+        />
+      </Card>
     </div>
   )
 };
