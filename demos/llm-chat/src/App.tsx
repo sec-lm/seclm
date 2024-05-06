@@ -10,7 +10,7 @@ const App = () => {
 
   const [chatEndpoints, setChatEndpoints] = useState<any[]>();
   if (!chatEndpoints) {
-    fetch(chat_endpoints_list)
+    fetch(chat_endpoints_list, { cache: "no-cache" })
       .then((response) => response.json())
       .then((data) => {
         setChatEndpoints(data);

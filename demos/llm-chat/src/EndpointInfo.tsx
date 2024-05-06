@@ -36,7 +36,7 @@ const EndpointInfo = ({ currentEndpointInfo }: { currentEndpointInfo: any }) => 
             if ((typeof currentEndpointInfo.url !== last_check_endpoint && currentEndpointInfo.url !== last_check_endpoint) || date.getTime() - new Date(last_check_time).getTime() > 600 * 1000) {
                 try {
                     const url = new URL(currentEndpointInfo.url);
-                    fetch(`https://api.certspotter.com/v1/issuances?domain=${url.hostname}&expand=dns_names&match_wildcards=true`)
+                    fetch(`https://api.certspotter.com/v1/issuances?domain=${url.hostname}&expand=dns_names&match_wildcards=true`, { cache: "no-cache" })
                         .then((response) => response.json())
                         .then((data) => {
                             var res = true;
