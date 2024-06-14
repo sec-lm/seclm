@@ -17,6 +17,13 @@ NVIDIA_GPU=e4:00.0
 USE_SNP=true
 USE_GPU=true
 
+if [ "$USE_SNP" != true ]; then
+    unset USE_SNP
+fi
+if [ "$USE_GPU" != true ]; then
+    unset USE_GPU
+fi
+
 cp $OS_IMAGE $DISK_IMAGE
 qemu-img resize $DISK_IMAGE ${DISK}G
 

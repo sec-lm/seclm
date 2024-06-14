@@ -24,7 +24,7 @@ wget https://github.com/sec-lm/measured-direct-boot/releases/download/fbb77fd/in
 ### Use Case 1: using cloud resources safely
 #### Host
 1. Prepare AMD SEV-SNP environment: follow the instructions [here](https://github.com/AMDESE/AMDSEV/tree/snp-latest).
-2. (Optional) Prepare NVIDIA Confidential Computing environment: follow the instructions [here](https://docs.nvidia.com/confidential-computing-deployment-guide.pdf).
+2. (Optional) Prepare NVIDIA Confidential Computing environment: follow the instructions [here](https://docs.nvidia.com/cc-deployment-guide-snp.pdf).
 3. (Optional) Get the VCEK certificate: install [snphost](https://github.com/virtee/snphost.git) and run `sudo snphost fetch vcek pem ./certs`, `sudo snphost import ./certs ./certs.blob`.
 4. Receive the user-data.iso from the user.
 5. Launch the confidential VM: modify `launch_vm.sh` and run `sudo ./launch_vm.sh`.
