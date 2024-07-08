@@ -41,7 +41,7 @@ const EndpointInfo = ({ currentEndpointInfo }: { currentEndpointInfo: any }) => 
                         .then((data) => {
                             var res = true;
                             for (const cert of data) {
-                                if (cert.pubkey_sha256 !== currentEndpointInfo.pubkey_sha256) {
+                                if (!currentEndpointInfo.pubkey_sha256.includes(cert.pubkey_sha256)) {
                                     res = false;
                                     break;
                                 }
